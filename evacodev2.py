@@ -2,6 +2,9 @@ import json
 from datetime import datetime
 import matplotlib.pyplot as plt
 
+start_year = int(input("Start year: "))
+end_year = int(input("End year: "))
+
 with open("eva-data.json", "r", encoding="utf-8") as file:
     eva_data = json.load(file)
 
@@ -16,6 +19,9 @@ for eva in eva_data:
         continue
 
     date = datetime.fromisoformat(date_text)
+    if not (start_year <= date.year <= end_year):
+        continue
+
     hours, minutes = map(int, duration_text.split(":"))
     duration_hours = hours + minutes / 60
 
