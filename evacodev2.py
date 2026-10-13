@@ -44,6 +44,25 @@ for date, duration_hours, country_text in records:
     elif country_text == "Russia":
         Russia_hours += duration_hours
 
+
+def classify_duration(duration_hours):
+    if duration_hours < 4:
+        return "Short"
+    elif duration_hours < 7:
+        return "Standard"
+    return "Long"
+
+
+category_counts = {"Short": 0, "Standard": 0, "Long": 0}
+for date, duration_hours, country_text in records:
+    category_counts[classify_duration(duration_hours)] += 1
+
+total_evas = len(records)
+print(f"\nEVA duration categories ({total_evas} EVAs):")
+for category, count in category_counts.items():
+    percentage = (count / total_evas * 100) if total_evas else 0
+    print(f"  {category} {count}  ({percentage:.1f}%)")
+
 plt.plot(dates, cumulative_hours)
 plt.title(f"USA: {USA_hours:.1f} Hours      Russia: {Russia_hours:.1f} Hours")
 plt.xlabel("Year")
